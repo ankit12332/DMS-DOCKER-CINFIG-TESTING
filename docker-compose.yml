@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+  server:
+    build:
+      context: ./DMS-backend
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./DMS-backend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=database-2.cpiszkml6ebz.us-east-1.rds.amazonaws.com
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=admin12345
+      - DB_NAME=demo
+    depends_on:
+      - react
+
+  react:
+    build:
+      context: ./DMS-FRONTEND
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./DMS-FRONTEND:/app
+    ports:
+      - "3001:80"
+
